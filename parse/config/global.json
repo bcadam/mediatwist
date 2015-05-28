@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "MediaTwist": {
+            "applicationId": "eDMdMhqERrdc0eN16XJ5mZ5Iq0iTmk4URQrNJVaX", 
+            "masterKey": "1XM4naiNVVkMzRNtvnnc9iycFv767j7NmJp6p3JT"
+        }, 
+        "_default": {
+            "link": "MediaTwist"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.4.2"
+    }
+}
