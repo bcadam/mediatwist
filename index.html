@@ -138,7 +138,7 @@ var TasksBox = React.createClass({
       }});
 
 var App = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [React.addons.LinkedStateMixin,ParseReact.Mixin],
   switchLoggedIn: function(){
     this.setState({currentUser: !this.state.currentUser});
   },
@@ -148,17 +148,24 @@ var App = React.createClass({
       currentUser: Parse.User.current()
     };
   },
+  
+  observe: function() {
+    return {
+      user: ParseReact.currentUser
+    };
+  },
+
   render:function(){
     document.title = this.props.siteTitle;
     var current = this.state.currentUser;
     console.log(current);
-    if (current)
+    if (this.data.user)
     {
     return <UserPage user={current} />;
     }
     else
     {
-      return <LoginPage siteTitle={this.props.siteTitle} isLoggedIn={this.state.currentUser} switchLoggedIn={this.switchLoggedIn}/>;
+      return <LoginWrapper siteTitle={this.props.siteTitle} isLoggedIn={this.state.currentUser} switchLoggedIn={this.switchLoggedIn}/>;
     }
   }
 
@@ -317,136 +324,6 @@ var UserPage = React.createClass({
 
       <Footer companyName="RooftoDev" link="http://www.rooftop.me" />
       </div>
-
-
-      );
-  }
-  });
-
-// Parse.User.logIn('adam.cragg@gmail.com', 'test123', {
-//       success: function(user) {
-//         // Do stuff after successful login.
-//         //alert(user.id);
-//         //console.log(user);
-//       },
-//       error: function(user, error) {
-//         // The login failed. Check error to see why.
-//         console.log(error);
-//         alert(error.message);
-
-//       }
-//     });
-
-// Parse.User.logIn('adam.cragg@gmail.com', 'test123', {
-//       success: function(user) {
-//         // Do stuff after successful login.
-//         //alert(user.id);
-//       },
-//       error: function(user, error) {
-//         // The login failed. Check error to see why.
-//         console.log(error);
-//         alert(error.message);
-
-//       }
-//     });
-
-function logIn(username,password){
-  //alert("logIn function fired");
-  alert("logIn function fired with: " + username + " and " + password);
-
-   Parse.User.logIn('adam.cragg@gmail.com', 'test123', {
-      success: function(user) {
-        // Do stuff after successful login.
-        //alert(user.id);
-      },
-      error: function(user, error) {
-        // The login failed. Check error to see why.
-        console.log(error);
-        alert(error.message);
-
-      }
-    });
-
-
-  }
-
-var LoginPage = React.createClass({    
-  getInitialState: function() {
-      return {
-        username: '',
-        password: ''
-        };
-
-    },
-
-  handleChange: function(name, event) {
-  var change = {};
-  change[name] = event.target.value;
-  this.setState(change);
-  //alert(this.state.username);
-  },
-
-  handleClick: function(){
-    //alert(this.state.username + " and " + this.state.password);
-
-     
-    logIn(this.state.username,this.state.password);
-    
-  },
-  render: function(){
-    return (
-      <body className="login-page">
-        <div className="login-box">
-          <div className="login-logo">
-            <a href=""><b>{this.props.siteTitle}</b></a>
-          </div>
-
-          <div className="login-box-body">
-
-            <p className="login-box-msg">Sign in to start your session</p>
-
-            <form action="" method="post">
-              <div className="form-group has-feedback">
-                <input onChange={this.handleChange.bind(this,'username')} type="text" className="form-control" placeholder="Email" />
-                <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
-              </div>
-              <div className="form-group has-feedback">
-                <input onChange={this.handleChange.bind(this,'password')} type="password" className="form-control" placeholder="Password"/>
-                <span className="glyphicon glyphicon-lock form-control-feedback"></span>
-              </div>
-              <div className="row">
-                <div className="col-xs-8">
-                  <div className="checkbox icheck">
-                    <label>
-                      <input type="checkbox"> Remember Me</input>
-                    </label>
-                  </div>
-                </div>
-                <div className="col-xs-4">
-                  <button onClick={this.handleClick} className="btn btn-primary btn-block btn-flat">Sign In</button>
-                </div>
-              </div>
-            </form>
-
-            <div className="social-auth-links text-center">
-              <p> OR </p>
-              <a href="#" className="btn btn-block btn-social btn-facebook btn-flat"><i className="fa fa-facebook"></i> Sign in using Facebook</a>
-              <a href="#" className="btn btn-block btn-social btn-google-plus btn-flat"><i className="fa fa-google-plus"></i> Sign in using Google+</a>
-            </div>
-
-            <a href="#">I forgot my password</a><br />
-            <a href="register.html" className="text-center">Register a new membership</a>
-
-          </div>
-
-
-
-
-
-        </div>
-
-
-      </body>
 
 
       );
@@ -2272,6 +2149,144 @@ function createAllTargets(siteUrl)
   });
 
   };
+
+
+var LoginWrapper = React.createClass({
+  mixins: [ParseReact.Mixin],
+
+  getInitialState: function() {
+    return {
+      error: null,
+      signup: false
+    };
+  },
+
+  observe: function() {
+    return {
+      user: ParseReact.currentUser
+    };
+  },
+
+  render: function() {
+    if (this.data.user) {
+      return (
+        <div>
+          <a className='logOut' onClick={this.logOut}>
+            <svg viewBox='0 0 60 60'>
+              <path d="M0,0 L30,0 L30,10 L10,10 L10,50 L30,50 L30,60 L0,60 Z"></path>
+              <path d="M20,23 L40,23 L40,10 L60,30 L40,50 L40,37 L20,37 Z"></path>
+            </svg>
+          </a>
+        </div>
+      );
+    }
+    return (
+      
+
+     <div className="">
+        <div className="login-box">
+        <div className="login-logo">
+        <h1><b>{this.props.siteTitle}</b></h1>
+        </div>
+        <div className="login-box-body">
+
+            <p className="login-box-msg">Sign in to start your session</p>
+
+        <div className='loginForm' onKeyDown={this.keyDown}>
+          {
+            this.state.error ?
+            <div className='row centered errors'>{this.state.error}</div> :
+            null
+          }
+          <div className='form-group has-feedback'>
+            <input  className='form-control' placeholder="Email" ref='username' id='username' type='text' />
+            <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
+          </div>
+          <div className='form-group has-feedback'>
+            <input  className='form-control' placeholder="Password" ref='password' id='password' type='password' />
+            <span className="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          
+          <div className="row">
+                <div className="col-xs-12">
+                  <button onClick={this.submit} className="btn btn-primary btn-block btn-flat">Sign In</button>
+                </div>
+              </div>
+              <div className="social-auth-links text-center">
+              <p> OR </p>
+              <a href="#" className="btn btn-block btn-social btn-facebook btn-flat"><i className="fa fa-facebook"></i> Sign in using Facebook</a>
+              <a href="#" className="btn btn-block btn-social btn-google-plus btn-flat"><i className="fa fa-google-plus"></i> Sign in using Google+</a>
+            </div>
+
+            <a href="#">I forgot my password</a><br />
+            <a href="register.html" className="text-center">Register a new membership</a>
+        </div>
+        </div>
+        </div>
+      </div>
+
+
+
+
+
+    );
+  },
+
+  submit: function() {
+    var self = this;
+    var username = React.findDOMNode(this.refs.username).value;
+    var password = React.findDOMNode(this.refs.password).value;
+    if (username.length && password.length) {
+      if (this.state.signup) {
+        console.log('signup');
+        var u = new Parse.User({
+          username: username,
+          password: password
+        });
+        u.signUp().then(function() {
+          self.setState({
+            error: null
+          });
+        }, function() {
+          self.setState({
+            error: 'Invalid account information'
+          });
+        });
+      } else {
+        Parse.User.logIn(username, password).then(function() {
+          self.setState({
+            error: null
+          });
+        }, function() {
+          self.setState({
+            error: 'Incorrect username or password'
+          });
+        });
+      }
+    } else {
+      this.setState({
+        error: 'Please enter all fields'
+      });
+    }
+  },
+
+  logOut: function() {
+    Parse.User.logOut();
+  },
+
+  keyDown: function(e) {
+    if (e.keyCode === 13) {
+      this.submit();
+    }
+  },
+
+  toggleSignup: function() {
+    this.setState({
+      signup: !this.state.signup
+    });
+  }
+
+  });
 
 React.render(
     <App siteTitle="MediaTwist" />,
