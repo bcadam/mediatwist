@@ -2033,7 +2033,7 @@ var PageTargets = React.createClass({
                 <div className="box-header">
                   <i className="ion ion-images"></i>
                   <h3 className="box-title">{creating} You have {this.data.targets.length} targets</h3>
-                  <button className="btn btn-default pull-right" onClick={this.handleClick}><i className="fa fa-plus"></i> Add target</button>
+                  {/*<button className="btn btn-default pull-right" onClick={this.handleClick}><i className="fa fa-plus"></i> Add target</button>*/}
                   {/*<div className="box-tools pull-right">
                     <ul className="pagination pagination-sm inline">
                       <li><a href="#">&laquo;</a></li>
@@ -2057,7 +2057,7 @@ var PageTargets = React.createClass({
                   </ul>
                 </div>
                 <div className="box-footer clearfix no-border">
-                  <button className="btn btn-default pull-right" onClick={this.handleClick}><i className="fa fa-plus"></i> Add sites</button>
+                  
                 </div>
               </div>
         </div>
@@ -2067,7 +2067,7 @@ var PageTargets = React.createClass({
     {
       return (
 
-        <NewSite key={Date.now()} newSite={this.createSite}  handleClick={this.handleClick}/>
+        <NewTarget key={Date.now()} newSite={this.createSite}  handleClick={this.handleClick}/>
 
         );
         }
@@ -2077,6 +2077,105 @@ var PageTargets = React.createClass({
 
     }
     );
+
+var NewTarget = React.createClass({
+  mixins: [ParseReact.Mixin],
+
+  observe: function() {
+    // Subscribe to all Comment objects, ordered by creation date
+    // The results will be available at this.data.comments
+      return {
+        targets: (new Parse.Query('Target')).equalTo('owner', this.props.user).ascending('createdAt')
+      };
+    },
+
+  addSite: function(event){
+
+      //variables = {"image": this.state.defaultImage, "siteassets": this.state.siteassets, "title":this.state.title , "owner" : this.state.user , "published":true, "url": this.state.url, "owner" : this.state.owner, "published" :true};
+
+
+
+      variables = {"title": this.state.title, "published" : true, "url" : this.state.url, "owner" : this.state.owner};
+      
+      holdMethod = this.props.newSite;
+
+      if (!this.state.defaultImage)
+      {
+
+
+        Parse.Config.get().then(function(config) {
+
+          var defaultImage = config.get("defaultImage");
+
+          variables.image = defaultImage;
+
+          holdMethod(variables);
+
+        });
+
+      }
+
+
+    },
+
+  getInitialState: function() {
+       
+      return {
+        creating: this.props.creating,
+        title: 'default title',
+        owner: Parse.User.current(),
+        published: true,
+        tags: {},
+        url: 'default url',
+        siteassets: ["none"],
+        defaultImage: null
+        };
+
+    },
+
+  handleChange: function(name, event) {
+    //alert(event.target.value);
+    var change = {};
+    change[name] = event.target.value;
+    this.setState(change);
+    },
+
+  handleClick: function(){
+    this.handleClick;
+  },
+
+  render:function(){
+    var creating = this.state.creating;
+    var sites = this.data.sites;
+    return (
+      <div className="box box-info">
+                  <div className="box-header">
+                    <i className="ion ion-android-desktop"></i>
+                    <h3 className="box-title">Add Target</h3>
+                    <div className="pull-right box-tools">
+                      <button onClick={this.props.handleClick} className="btn btn-info btn-sm btn-block" data-widget="remove" data-toggle="tooltip" title="Remove"><i className="fa fa-times"></i></button>
+                    </div>
+                  </div>
+                  <div className="box-body">
+                    <form action="#" method="post">
+
+                      <div className="form-group">
+                        <input onChange={this.handleChange.bind(this,'title')} type="text" className="form-control" name="name" placeholder="Site Name:"/>
+                      </div>
+                      <div className="form-group">
+                      <input onChange={this.handleChange.bind(this,'url')} type="text" className="form-control" name="tags" placeholder="Site URL:"/>
+                      </div>
+
+                    </form>
+                  </div>
+                  <div className="box-footer clearfix">
+                    <button className="pull-right btn btn-default" id="sendEmail" onClick={this.addSite}>Add Target <i className="fa fa-arrow-circle-right"></i></button>
+                  </div>
+                </div>
+
+        );
+      }
+  });
 
 
 
