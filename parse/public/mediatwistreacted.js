@@ -1,3 +1,5 @@
+// this is version 1.0 of hte mediatwist library
+// all rights are reserved
 
 //alert("loaded");
 
@@ -54,7 +56,7 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
 
         matchingSite = results[0];
         arraySiteAssets = matchingSite.get("siteassets");
-        //console.log(matchingSite);
+        //console.log(matchingSite.id);
 
     }).then(function() {
         
@@ -64,7 +66,7 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
         
         queryBassets.find(function(results) {
             matchingBassets = results;
-            // alert(matchingBassets);
+            //console.log(matchingBassets);
             //remove unmatched bassets based on refferring info
             for (var i = 0, counter = matchingBassets.length; i < counter; i++) {
                 
@@ -84,45 +86,54 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
             }
 
             /** should check to see if any of the tags matches before subing in the new ones**/
-        });
+        })
+        .then(function(){
 
-    }).then(function() {
-        //console.log(matchedBassets);
-        //console.log(matchingSite);
-        queryTargets.equalTo("site", matchingSite);
-        queryTargets.equalTo("published", true);
-        queryTargets.find(function(results) {
-            //console.log(results.length);
-            matchingTargets = results;
-            //alert(matchingTargets);
-            // go through every image on the current page and check if it is a target
-            // if it is then replace the target with a Basset
-            for (var i = 0, iLen = imagesonCurrentPage.length; i < iLen; i++) {
 
-                //alert(matchingTargets.length);
-                for (var x = 0, xLen = matchingTargets.length; x < xLen; x++) {
-                    //alert(matchingTargets[x].get("url"));
-                    //alert(imagesonCurrentPage[i].src);
-                    if (matchingTargets[x].get("url") == imagesonCurrentPage[i].src) {
-                        //console.log(imagesonCurrentPage[i]);
-                        var matchedPic = matchedBassets[i].get("image");
-                        //console.log( matchedBassets[i].get("image") );
-                        imagesonCurrentPage[i].src = matchedPic.url();
-                        //console.log("that's " + matchedPic.url() );
-                        var holderHeight = imagesonCurrentPage[i].height - 1;
-                        var holderWidth = imagesonCurrentPage[i].width - 1;
-                        imagesonCurrentPage[i].style.height = holderHeight + "px";
-                        imagesonCurrentPage[i].style.width = holderWidth + "px";
+            queryTargets.equalTo("site", matchingSite);
+            queryTargets.equalTo("published", true);
+            queryTargets.find(function(results) {
+                console.log("Matching Site: " + matchingSite.id);
+                console.log("Matching Targets: " + results.length);
+                console.log("Matched Assets: " + matchedBassets.length);
+                //console.log(matchedBassets)
+                matchingTargets = results;
+
+                //alert(matchingTargets);
+                // go through every image on the current page and check if it is a target
+                // if it is then replace the target with a Basset
+                for (var i = 0, iLen = imagesonCurrentPage.length; i < iLen; i++) {
+
+                    //alert(matchingTargets.length);
+                    for (var x = 0, xLen = matchingTargets.length; x < xLen; x++) {
+                        //alert(matchingTargets[x].get("url"));
+                        //alert(imagesonCurrentPage[i].src);
+                        //console.log(matchingTargets[x].get("url"));
+                        //console.log(imagesonCurrentPage[i].src);
+
+                        if (matchingTargets[x].get("url") == imagesonCurrentPage[i].src) {
+                            //console.log(imagesonCurrentPage[i]);
+                            //console.log(matchedBassets[i].attributes.image._url);
+                            //var matchedPic = matchedBassets[i].get("image");
+                            //console.log( matchedBassets[i].get("image") );
+                            imagesonCurrentPage[i].src = matchedBassets[i].attributes.image._url;
+                            //console.log("that's " + matchedPic.url() );
+                            var holderHeight = imagesonCurrentPage[i].height - 1;
+                            var holderWidth = imagesonCurrentPage[i].width - 1;
+                            imagesonCurrentPage[i].style.height = holderHeight + "px";
+                            imagesonCurrentPage[i].style.width = holderWidth + "px";
+                        }
+
                     }
+
 
                 }
 
+            });
 
-            }
 
         });
 
-        //end of then function
     });
 
     //end of load function method that calls parse
