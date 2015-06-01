@@ -1,11 +1,17 @@
 // this is version 1.0 of hte mediatwist library
 // all rights are reserved
 
-//alert("loaded");
 
 /// load in the two libraries necessary for this to work
 loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
 
+    var css = document.createElement("style");
+    css.type = "text/css";
+    css.innerHTML = ".sneaky { opacity: 0 }";
+    document.body.appendChild(css);
+
+
+    //loadScript("https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js", function(){});
     /// create the parse connection to get the info about the site
     Parse.initialize("eDMdMhqERrdc0eN16XJ5mZ5Iq0iTmk4URQrNJVaX", "Ap331XrGb0AyMT4FzysCJXWoTkkXXvTLNQYDPBsh");
 
@@ -23,6 +29,14 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
 
     //get all the images in the document included multipe data points
     var imagesonCurrentPage = document.images;
+
+    // for (var i = 0; i < imagesonCurrentPage.length; i++)
+    // {
+    //     //imagesonCurrentPage[i].className = imagesonCurrentPage[i].className + " sneaky";
+
+    //     imagesonCurrentPage[i].classList.add("sneaky");
+    // }
+
     //alert(imagesonCurrentPage);
     //var test = document.images.length;
     //all of the assets that have been associated with the site
@@ -51,6 +65,7 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
     //alert(windowurl);
 
     querySite.equalTo("url", windowurl);
+    querySite.equalTo("published", true);
 
     querySite.find(function(results) {
 
@@ -127,7 +142,9 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
                     }
 
 
-                }
+
+                    }
+
 
             });
 
