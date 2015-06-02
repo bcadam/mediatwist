@@ -1,7 +1,7 @@
 {
   "name": "MediaTwist",
   "description": "MediaTwist is a media switching service to optimize user experience based on viewing history.",
-  "repository": "https://github.com/heroku/node-js-getting-started",
+  "repository": "https://github.com/bcadam/mediatwist",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
-  "keywords": ["node", "express", "static"]
+  "keywords": ["mediatwist", "rooftopdev", "static"]
 }
