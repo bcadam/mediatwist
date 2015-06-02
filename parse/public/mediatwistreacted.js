@@ -1,4 +1,4 @@
-// this is version 1.0 of hte mediatwist library
+// this is version 1.0 of the mediatwist library
 // all rights are reserved
 
 
@@ -17,6 +17,8 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
 
 
     var referrer = document.referrer;
+
+    var lookingForArray;
 
     // look for the clues in the url. This will only match imags whose tags match perfectly
     if (referrer) {
@@ -66,6 +68,7 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
 
     querySite.equalTo("url", windowurl);
     querySite.equalTo("published", true);
+    querySite.include("owner");
 
     querySite.find(function(results) {
 
@@ -94,11 +97,14 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
                 if ( intersect(holder, lookingForArray).length >= 1 ) {
                     
                     matchedBassets.push(matchingBassets[i]);
-                    //i = i - 1;
-                    //alert("adam's dumb");
+
                 }
 
             }
+
+            matchedBassets.sort(function() {
+              return .5 - Math.random();
+            });
 
             /** should check to see if any of the tags matches before subing in the new ones**/
         })
@@ -130,13 +136,23 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
                             //console.log(imagesonCurrentPage[i]);
                             //console.log(matchedBassets[i].attributes.image._url);
                             //var matchedPic = matchedBassets[i].get("image");
-                            //console.log( matchedBassets[i].get("image") );
+                            //console.log( matchingTargets[x].get("height") );
                             imagesonCurrentPage[i].src = matchedBassets[i].attributes.image._url;
                             //console.log("that's " + matchedPic.url() );
+                            //console.log("it is " + imagesonCurrentPage[i].height);
                             var holderHeight = imagesonCurrentPage[i].height - 1;
                             var holderWidth = imagesonCurrentPage[i].width - 1;
                             imagesonCurrentPage[i].style.height = holderHeight + "px";
                             imagesonCurrentPage[i].style.width = holderWidth + "px";
+                            var SwitchedAsset = Parse.Object.extend("Switch");
+                            var switchedasset = new SwitchedAsset();
+                            switchedasset.set("site", matchingSite);
+                            switchedasset.set("target", matchingTargets[x] );
+                            switchedasset.set("basset", matchedBassets[i] );
+                            switchedasset.set("needle", lookingForArray );
+                            switchedasset.set("owner", matchingSite.get("owner") );
+                            switchedasset.save();
+
                         }
 
                     }
@@ -160,6 +176,9 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
 
 function processURL(variable) {
     variable = variable.replace(window.location.protocol + "//" + window.location.host, "")
+    
+    variable = variable.replace("/index.html",null);
+    //console.log(variable);
     variable = variable.replace(/&q=/g, ",");
     variable = variable.replace(/&oq/g, ",");
     variable = variable.replace(/=/g, ",");
@@ -167,10 +186,15 @@ function processURL(variable) {
     variable = variable.replace(/\+/g, ",");
     variable = variable.replace(/&/g, ",");
     variable = variable.replace(/\?/g, ",");
+
     variable = variable.split(",");
+    variable.remove(null);
+    //variable.shift();
     //alert(variable);
     return variable;
 }
+
+
 
 
 //alert(intersect(["cat","phone","fire","adam","cat"], ["fire","cat"]));
