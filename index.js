@@ -4,8 +4,8 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(request, response) {
-  response.sendFile('/public/home.html');
+app.get('/', function(req, res){
+    res.sendfile('default.html', { root: __dirname + "/home.html" } );
 });
 
 app.listen(app.get('port'), function() {
