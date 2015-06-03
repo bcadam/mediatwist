@@ -1,5 +1,4 @@
 
-require('newrelic');
 
 var express = require('express');
 
