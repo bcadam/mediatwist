@@ -1639,25 +1639,25 @@ var Site = React.createClass({
     return(
 
 
-      <li key={site.id} className="col-lg-12">
+      <li key={site.id} className="col-lg-12 col-md-12 col-xs-12">
                       {/*<span className="handle">
                         <i className="fa fa-ellipsis-v"></i>
                         <i className="fa fa-ellipsis-v"></i>
                       </span>
                       <input type="checkbox" value="" name="" className="col-lg-2" />*/}
-                      <span className="text col-lg-3"><img style={{"maxHeight" : "100px" }} src={site.image.url()} />
+                      <span className="text col-lg-3 col-md-6 col-xs-12"><img style={{"maxHeight" : "100px" }} src={site.image.url()} />
                       </span>
 
-                      <div className="col-lg-2">{site.title}</div>
+                      <div className="col-lg-2 col-md-6 col-xs-12">{site.title}</div>
                       
-                      <div className="col-lg-4">
+                      <div className="col-lg-4 col-md-6">
                       <small className="label bg-yellow"><i className="ion ion-forward"></i> {site.createdAt}</small>
                       <span className="text">
                         {site.url}
                       </span>
                       </div>
                       
-                      <div className="col-lg-2">
+                      <div className="col-lg-2 col-md-6 col-xs-12">
                       <div className="onoffswitch" onClick={this.toggle}>
                       <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch" checked={this.state.published} />
                         <label className="onoffswitch-label" for="myonoffswitch">
@@ -1668,7 +1668,7 @@ var Site = React.createClass({
                     </div>
 
 
-                      <div className="tools col-lg-1">
+                      <div className="tools col-lg-1 col-xs-12">
                         {/*<i className="fa fa-edit"></i>*/}
                         <i className="fa fa-trash-o" onClick={this.handleClick}></i>
                       </div>

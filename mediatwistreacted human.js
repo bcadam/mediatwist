@@ -1,8 +1,7 @@
 // this is version 2.0 of the mediatwist library
 // all rights are reserved
 
-// uglifyjs "mediatwistreacted human.js" -m -c -e -o public/parse/public/mediatwistreacted.js && cd public/parse && parse deploy && cd ..
-
+// uglifyjs "mediatwistreacted human.js" -m -c -e -o public/mediatwistreacted.js && parse deploy
 // git add . && git commit -m "update" && git push heroku master
 
 loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
