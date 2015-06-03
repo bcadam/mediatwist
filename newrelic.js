@@ -8,11 +8,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['My Application'],
+  app_name: ['MediaTwist'],
   /**
    * Your New Relic license key.
    */
-  license_key: 'license key here',
+  license_key: '1afde707d03701c5322b24f30c75a495281ebc3d',
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
