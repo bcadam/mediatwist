@@ -1,8 +1,7 @@
 // this is version 1.0 of the mediatwist library
 // all rights are reserved
 
-//  uglifyjs "mediatwistreacted human.js" -m -c -e -o public/parse/public/mediatwistreacted.js 
-// && cd public/parse && parse deploy && cd .. & cd ..
+// uglifyjs "mediatwistreacted human.js" -m -c -e -o public/parse/public/mediatwistreacted.js && cd public/parse && parse deploy && cd ..
 
 // git add . && git commit -m "update" && git push heroku master
 
