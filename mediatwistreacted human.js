@@ -4,6 +4,7 @@
 //  uglifyjs "mediatwistreacted human.js" -m -c -e -o public/parse/public/mediatwistreacted.js 
 // && cd public/parse && parse deploy && cd .. & cd ..
 
+// git add . && git commit -m "update" && git push heroku master
 
 /// load in the two libraries necessary for this to work
 loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
