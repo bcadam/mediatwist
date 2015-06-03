@@ -5,7 +5,7 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
-    res.sendfile('default.html', { root: __dirname + "/home.html" } );
+    res.sendfile('home.html', { root: __dirname } );
 });
 
 app.listen(app.get('port'), function() {
