@@ -1,6 +1,6 @@
 {
   "name": "MediaTwist",
-  "version": "1",
+  "version": "0.1.3",
   "description": "MediaTwist is a media switching service to optimize user experience based on viewing history.",
   "main": "index.js",
   "scripts": {
