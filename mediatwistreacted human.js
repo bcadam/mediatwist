@@ -1,7 +1,8 @@
 // this is version 1.0 of the mediatwist library
 // all rights are reserved
 
-//  uglifyjs "mediatwistreacted human.js" -m -c -e -o mediatwistreacted.js
+//  uglifyjs "mediatwistreacted human.js" -m -c -e -o public/parse/public/mediatwistreacted.js 
+// && cd public/parse && parse deploy && cd .. & cd ..
 
 
 /// load in the two libraries necessary for this to work
