@@ -1,11 +1,10 @@
-// this is version 1.0 of the mediatwist library
+// this is version 2.0 of the mediatwist library
 // all rights are reserved
 
 // uglifyjs "mediatwistreacted human.js" -m -c -e -o public/parse/public/mediatwistreacted.js && cd public/parse && parse deploy && cd ..
 
 // git add . && git commit -m "update" && git push heroku master
 
-/// load in the two libraries necessary for this to work
 loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
 
     var css = document.createElement("style");
@@ -65,9 +64,6 @@ loadScript("https://cdn.jsdelivr.net/parse/1.2.9/parse.min.js", function() {
     //queryBassets.limit(50);
 
     var windowurl = window.location.protocol + "//" + window.location.host + '/';
-
-    //windowurl = "placeHolderForTesting.com";
-    //alert(windowurl);
 
     querySite.equalTo("url", windowurl);
     querySite.equalTo("published", true);
